@@ -1,6 +1,6 @@
 <?php #Database Access class
 
-class DBA extends Exception{
+class DBA {
     private $dsn, $username, $password, $dbname, $host, $pdo_handler;
     
     function __construct($dsn,$username,$password,$dbname) {
