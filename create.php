@@ -15,8 +15,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     if($valid === true) {
         $mysql_connection->connect();
         $query_statement = "INSERT INTO `Persons`(`forename`, `surname`, `gender`, `home_phone`, `cell_phone`, `alternate_phone`)
-                            VALUES('$forename', '$surname', '$gender', '$home_phone', '$cell_phone', '$alternate_phone');";
-        $query_result = $mysql_connection->do_query($query_statement);
+                            VALUES(':forename', ':surname', ':gender', ':home_phone', ':cell_phone', ':alternate_phone')";
+        $values = array(':forename' => $forename,
+                        ':surname' => $surname,
+                        ':gender' => $gender,
+                        ':home_phone' => $home_phone,
+                        ':cell_phone' => $cell_phone,
+                        ':alternate_phone' => $alternate_phone);
+        $query_result = $mysql_connection->do_query($query_statement, $values);
         if(!is_bool($query_result)) {
             $message = "<p id='message' class='success'>Your data was successfully entered.</p>";
             $forename = $surname = $gender = $home_phone = $cell_phone = $alternate_phone = '';
